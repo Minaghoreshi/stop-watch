@@ -14,11 +14,11 @@ export default function Lap() {
         <tr>
           <td>1</td>
           <td>00:06:20</td>
-        </tr>{" "}
+        </tr>
         <tr>
           <td>1</td>
           <td>00:06:20</td>
-        </tr>{" "}
+        </tr>
         <tr>
           <td>1</td>
           <td>00:06:20</td>
