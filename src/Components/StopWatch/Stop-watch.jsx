@@ -3,7 +3,12 @@ import styles from "./stop-watch.module.css";
 import { LapContext } from "../../Contexts/LapContext";
 import { TimerContext } from "../../Contexts/TimerContext";
 import { formatTime } from "../../Utils";
-import { handleStart, handleStop, handleLap } from "./timerActions";
+import {
+  handleStart,
+  handleStop,
+  handleLap,
+  handleReset,
+} from "./timerActions";
 export default function StopWatch() {
   const { lapState, lapDispatch } = useContext(LapContext);
   const { timerState, timerStateDispatch } = useContext(TimerContext);
@@ -32,10 +37,18 @@ export default function StopWatch() {
         <button
           className={styles.start}
           onClick={() => {
-            handleStart(timerStateDispatch);
+            (!timerState.isRunning && timerState.elapsedTime === 0) ||
+            (!timerState.isRunning && timerState.elapsedTime > 0)
+              ? handleStart(timerStateDispatch)
+              : handleStop(timerStateDispatch);
+            // handleStart(timerStateDispatch);
           }}
         >
-          {!timerState.isRunning && lapState.length > 0 ? "Resume" : "Start"}
+          {!timerState.isRunning && timerState.elapsedTime === 0
+            ? "Start"
+            : !timerState.isRunning && timerState.elapsedTime > 0
+            ? "Resume"
+            : "Pause"}
         </button>{" "}
         <button
           className={styles.lap}
@@ -48,10 +61,10 @@ export default function StopWatch() {
         <button
           className={styles.stop}
           onClick={() => {
-            handleStop(timerStateDispatch);
+            handleReset(timerStateDispatch, lapDispatch);
           }}
         >
-          STOP
+          RESET
         </button>
       </div>
     </div>

@@ -14,7 +14,10 @@ export const timerReducer = (state, action) => {
     case actionTypes.STOP:
       return { ...state, isRunning: false };
     case actionTypes.RESET:
-      return { ...state, elapsedTime: 0 };
+      return {
+        isRunning: false,
+        elapsedTime: 0,
+      };
     default:
       break;
   }

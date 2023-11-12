@@ -15,3 +15,7 @@ export const handleLap = (
     setLastAddedTime(timerState.elapsedTime);
   }
 };
+export const handleReset = (timerStateDispatch, lapDispatch) => {
+  timerStateDispatch({ type: "RESET" });
+  lapDispatch({ type: "RESET" });
+};
