@@ -3,23 +3,11 @@ import styles from "./stop-watch.module.css";
 import { LapContext } from "../../Contexts/LapContext";
 import { TimerContext } from "../../Contexts/TimerContext";
 import { formatTime } from "../../Utils";
+import { handleStart, handleStop, handleLap } from "./timerActions";
 export default function StopWatch() {
   const { lapDispatch } = useContext(LapContext);
   const { timerState, timerStateDispatch } = useContext(TimerContext);
   const [lastAddedTIme, setLastAddedTime] = useState(0);
-
-  const handleStart = () => {
-    timerStateDispatch({ type: "START" });
-  };
-  const handleStop = () => {
-    timerStateDispatch({ type: "STOP" });
-  };
-  const handleLap = () => {
-    if (lastAddedTIme !== timerState.elapsedTime) {
-      lapDispatch({ type: "ADD_LAP", payload: timerState.elapsedTime });
-      setLastAddedTime(timerState.elapsedTime);
-    }
-  };
 
   useEffect(() => {
     let intervalId;
@@ -41,13 +29,28 @@ export default function StopWatch() {
         {formatTime(timerState.elapsedTime)}
       </div>
       <div className={styles.stopWatch__buttons}>
-        <button className={styles.start} onClick={handleStart}>
+        <button
+          className={styles.start}
+          onClick={() => {
+            handleStart(timerStateDispatch);
+          }}
+        >
           START
         </button>{" "}
-        <button className={styles.lap} onClick={handleLap}>
+        <button
+          className={styles.lap}
+          onClick={() => {
+            handleLap(lastAddedTIme, timerState, lapDispatch, setLastAddedTime);
+          }}
+        >
           LAP
         </button>
-        <button className={styles.stop} onClick={handleStop}>
+        <button
+          className={styles.stop}
+          onClick={() => {
+            handleStop(timerStateDispatch);
+          }}
+        >
           STOP
         </button>
       </div>
