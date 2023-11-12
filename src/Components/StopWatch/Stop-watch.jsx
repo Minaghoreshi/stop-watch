@@ -5,7 +5,7 @@ import { TimerContext } from "../../Contexts/TimerContext";
 import { formatTime } from "../../Utils";
 import { handleStart, handleStop, handleLap } from "./timerActions";
 export default function StopWatch() {
-  const { lapDispatch } = useContext(LapContext);
+  const { lapState, lapDispatch } = useContext(LapContext);
   const { timerState, timerStateDispatch } = useContext(TimerContext);
   const [lastAddedTIme, setLastAddedTime] = useState(0);
 
@@ -35,7 +35,7 @@ export default function StopWatch() {
             handleStart(timerStateDispatch);
           }}
         >
-          START
+          {!timerState.isRunning && lapState.length > 0 ? "Resume" : "Start"}
         </button>{" "}
         <button
           className={styles.lap}
