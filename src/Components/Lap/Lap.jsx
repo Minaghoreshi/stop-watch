@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import styles from "./Lap.module.css";
 import { LapContext } from "../../Contexts/LapContext";
-import { formatTime } from "../StopWatch/Stop-watch";
+import { formatTime } from "../../Utils";
+
 export default function Lap() {
   const { lapState } = useContext(LapContext);
   console.log(lapState);
@@ -11,7 +12,6 @@ export default function Lap() {
         <tr>
           <th>Lap</th>
           <th>Time</th>
-          {/* Add more columns as needed */}
         </tr>
       </thead>
       <tbody>
