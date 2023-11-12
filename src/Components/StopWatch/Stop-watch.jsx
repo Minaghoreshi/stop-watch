@@ -2,30 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "./stop-watch.module.css";
 import { LapContext } from "../../Contexts/LapContext";
 import { TimerContext } from "../../Contexts/TimerContext";
+export function formatTime(milliseconds) {
+  const totalSeconds = Math.floor(milliseconds / 100);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const remainingMilliseconds = milliseconds % 100;
+
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+    2,
+    "0"
+  )}.${String(remainingMilliseconds).padStart(2, "0")}`;
+}
 export default function StopWatch() {
-  const { lapState, lapDispatch } = useContext(LapContext);
+  const { lapDispatch } = useContext(LapContext);
   const { timerState, timerStateDispatch } = useContext(TimerContext);
   const [lastAddedTIme, setLastAddedTime] = useState(0);
-  // function millisecondsToHMS(milliseconds) {
-  //   let minutes = Math.floor(milliseconds / 60000);
-  //   let remainingSeconds = Math.floor((milliseconds % 60000) / 1000);
-  //   let remainingmilli = milliseconds % 1000;
-
-  //   console.log(
-  //     `${minutes} minutes and ${remainingSeconds} second and  ${remainingmilli} milisecond`
-  //   );
-  // }
-  function formatTime(milliseconds) {
-    const totalSeconds = Math.floor(milliseconds / 100);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    const remainingMilliseconds = milliseconds % 100;
-
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
-      2,
-      "0"
-    )}.${String(remainingMilliseconds).padStart(2, "0")}`;
-  }
 
   const handleStart = () => {
     timerStateDispatch({ type: "START" });
@@ -56,8 +47,6 @@ export default function StopWatch() {
       clearInterval(intervalId);
     };
   }, [timerState.isRunning]);
-
-  // let hour = timerState.elapsedTime / 3600;
 
   return (
     <div className={styles.stopWatch__Wrapper}>
