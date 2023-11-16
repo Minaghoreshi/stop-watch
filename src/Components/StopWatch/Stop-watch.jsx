@@ -10,7 +10,7 @@ import {
   handleReset,
 } from "./timerActions";
 export default function StopWatch() {
-  const { lapState, lapDispatch } = useContext(LapContext);
+  const { lapDispatch } = useContext(LapContext);
   const { timerState, timerStateDispatch } = useContext(TimerContext);
   const [lastAddedTIme, setLastAddedTime] = useState(0);
 
@@ -41,7 +41,6 @@ export default function StopWatch() {
             (!timerState.isRunning && timerState.elapsedTime > 0)
               ? handleStart(timerStateDispatch)
               : handleStop(timerStateDispatch);
-            // handleStart(timerStateDispatch);
           }}
         >
           {!timerState.isRunning && timerState.elapsedTime === 0
